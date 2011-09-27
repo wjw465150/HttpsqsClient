@@ -4,10 +4,10 @@ public void testPut() {
     String queue_name = "test_queue";
     HttpsqsClient instance = new HttpsqsClient("127.0.0.1", 1218, "GBK", 60 * 1000, 60 * 1000);
 
-	  System.out.println("put");
+    System.out.println("put");
     String data = "test(≤‚ ‘)Httpsqs";
     String expResult = "HTTPSQS_PUT_OK";
     String result = instance.put(queue_name, data, null);
     System.out.println(result);
     assertTrue(expResult.equals(result));
-  }
+}
