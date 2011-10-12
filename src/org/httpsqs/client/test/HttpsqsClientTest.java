@@ -2,6 +2,7 @@ package org.httpsqs.client.test;
 
 import junit.framework.TestCase;
 import org.httpsqs.client.HttpsqsClient;
+import org.httpsqs.client.SqsMsg;
 
 /**
  * ≤‚ ‘HttpSqsClient
@@ -152,4 +153,14 @@ public class HttpsqsClientTest extends TestCase {
     assertTrue(!expResult.equals(result) && !result.startsWith(HttpsqsClient.HTTPSQS_ERROR_PREFIX));
   }
 
+  /**
+   * Test of getEx method, of class HttpsqsClient.
+   */
+  public void testGetEx() {
+    System.out.println("get");
+    String expResult = "HTTPSQS_GET_END";
+    SqsMsg result = instance.getEx(queue_name,null);
+    System.out.println(result);
+    assertTrue(!expResult.equals(result) && !result.msg.startsWith(HttpsqsClient.HTTPSQS_ERROR_PREFIX));
+  }
 }

@@ -8,4 +8,10 @@ public class SqsMsg {
     this.pos = pos;
     this.msg = msg;
   }
+
+  @Override
+  public String toString() {
+    return "SqsMsg [pos=" + pos + ", msg=" + msg + "]";
+  }
+
 }
