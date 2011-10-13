@@ -477,4 +477,86 @@ public class HttpsqsClient {
     }
   }
 
+  /**
+   * 入队列
+   * 
+   * @param queue_name
+   *          队列名
+   * @param data
+   *          入队列的消息内容
+   * @param auth
+   *          Sqs4j的get,put,view的验证密码,当不需要验证时,设置为null
+   * @return 成功: 返回字符串"HTTPSQS_PUT_OK" <br>
+   *         错误: "HTTPSQS_PUT_ERROR"-入队列错误; "HTTPSQS_PUT_END"-队列已满 <br>
+   *         验证错误: "HTTPSQS_AUTH_FAILED" <br>
+   *         其他错误: 返回已"HTTPSQS_ERROR"开头的字符串
+   */
+  public SqsMsg putEx(String queue_name, String data, String auth) {
+    StringBuilder urlstr;
+    URL url;
+    try {
+      urlstr = new StringBuilder("http://" + this.server + ":" + this.port + "/?name="
+          + URLEncoder.encode(queue_name, charset) + "&opt=put");
+      if (auth != null) {
+        urlstr.append("&auth=" + URLEncoder.encode(auth, charset));
+      }
+
+      url = new URL(urlstr.toString());
+    } catch (UnsupportedEncodingException ex) {
+      return new SqsMsg(-1, HTTPSQS_ERROR_PREFIX + ":" + ex.getMessage());
+    } catch (MalformedURLException e) {
+      return new SqsMsg(-1, HTTPSQS_ERROR_PREFIX + ":" + e.getMessage());
+    }
+    URLConnection conn;
+
+    OutputStreamWriter writer = null;
+    try {
+      conn = url.openConnection();
+      conn.setConnectTimeout(connectTimeout);
+      conn.setReadTimeout(readTimeout);
+      conn.setUseCaches(false);
+      conn.setDoOutput(true);
+      conn.setDoInput(true);
+      conn.setRequestProperty("Content-Type", "text/plain;charset=" + charset);
+
+      //conn.setRequestProperty("Authorization","Basic "+ new String(Base64.encodeBytes((user+":"+pass).getBytes(charset))));  //需要BASIC验证的可以加上
+
+      conn.connect();
+
+      writer = new OutputStreamWriter(conn.getOutputStream(), charset);
+      writer.write(URLEncoder.encode(data, charset));
+      writer.flush();
+    } catch (IOException e) {
+      return new SqsMsg(-1, HTTPSQS_ERROR_PREFIX + ":" + e.getMessage());
+    } finally {
+      if (writer != null) {
+        try {
+          writer.close();
+        } catch (IOException ex) {
+        }
+      }
+    }
+
+    long putPos = -1;
+    try {
+      putPos = Long.parseLong(conn.getHeaderField("Pos"));
+    } catch (Throwable e) {
+      putPos = -1;
+    }
+
+    BufferedReader reader = null;
+    try {
+      reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+      return new SqsMsg(putPos, reader.readLine());
+    } catch (IOException e) {
+      return new SqsMsg(-1, HTTPSQS_ERROR_PREFIX + ":" + e.getMessage());
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (IOException ex) {
+        }
+      }
+    }
+  }
 }

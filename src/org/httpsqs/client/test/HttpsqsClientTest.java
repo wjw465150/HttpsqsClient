@@ -53,6 +53,17 @@ public class HttpsqsClientTest extends TestCase {
   }
 
   /**
+   * Test of putEx method, of class HttpsqsClient.
+   */
+  public void testPutEx() {
+    System.out.println("put");
+    String data = "test(²âÊÔ)Httpsqs";
+    SqsMsg result = instance.putEx(queue_name, data, null);
+    System.out.println(result);
+    assertTrue(result.pos >0 );
+  }
+
+  /**
    * Test of maxqueue method, of class HttpsqsClient.
    */
   public void testMaxqueue() {
@@ -158,9 +169,8 @@ public class HttpsqsClientTest extends TestCase {
    */
   public void testGetEx() {
     System.out.println("get");
-    String expResult = "HTTPSQS_GET_END";
     SqsMsg result = instance.getEx(queue_name,null);
     System.out.println(result);
-    assertTrue(!expResult.equals(result) && !result.msg.startsWith(HttpsqsClient.HTTPSQS_ERROR_PREFIX));
+    assertTrue(result.pos >0 );
   }
 }
