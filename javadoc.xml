@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="javadoc">
-    <target name="javadoc">
-        <javadoc access="public" author="true" classpath="lib/junit-1.3.jar" destdir="api-doc" doctitle="HttpsqsClient" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.httpsqs.client.test,org.httpsqs.client,org.httpsqs.client.ex,org.httpsqs.client.ex.test" source="1.6" sourcepath="src" splitindex="true" use="true" version="true"/>
-    </target>
-</project>
