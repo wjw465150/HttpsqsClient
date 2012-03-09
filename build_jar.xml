@@ -10,7 +10,9 @@
     <delete dir="${basedir}/api-doc" quiet="true"/>
     <mkdir dir="${basedir}/api-doc"/>
 
-  	<javadoc access="public" author="true" classpath="lib/junit-1.3.jar" destdir="api-doc" doctitle="HttpsqsClient" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.httpsqs.client.test,org.httpsqs.client" source="1.6" sourcepath="src" splitindex="true" use="true" version="true">
+  	<javadoc access="public" author="true" classpath="lib/junit-1.3.jar" destdir="api-doc" 
+  		doctitle="HttpsqsClient api doc" windowtitle="HttpsqsClient api doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" 
+  		packagenames="org.httpsqs.client.test,org.httpsqs.client" source="1.6" sourcepath="src" splitindex="true" use="true" version="true">
       <link href="http://download.oracle.com/javase/6/docs/api/"/>
     </javadoc>
   </target>

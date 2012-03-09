@@ -380,10 +380,10 @@ public class HttpsqsClient {
    *          队列名
    * @param auth
    *          Sqs4j的get,put,view的验证密码,当不需要验证时,设置为null
-   * @return 成功: 出队列的消息内容 <br>
-   *         错误: "HTTPSQS_GET_END"-队列为空 <br>
-   *         验证错误: "HTTPSQS_AUTH_FAILED" <br>
-   *         其他错误: 返回已"HTTPSQS_ERROR"开头的字符串
+   * @return SqsMsg 成功: SqsMsg.pos=当前队列的读取位置点, SqsMsg.msg=出队列的消息内容 <br>
+   *         错误: SqsMsg.pos=-1; SqsMsg.msg="HTTPSQS_GET_END"-队列为空 <br>
+   *         验证错误: SqsMsg.pos=-1; SqsMsg.msg="HTTPSQS_AUTH_FAILED" <br>
+   *         其他错误: SqsMsg.pos=-1; SqsMsg.msg=返回已"HTTPSQS_ERROR"开头的字符串
    */
   public SqsMsg getEx(String queue_name, String auth) {
     SqsMsg result = null;
@@ -486,10 +486,10 @@ public class HttpsqsClient {
    *          入队列的消息内容
    * @param auth
    *          Sqs4j的get,put,view的验证密码,当不需要验证时,设置为null
-   * @return 成功: 返回字符串"HTTPSQS_PUT_OK" <br>
-   *         错误: "HTTPSQS_PUT_ERROR"-入队列错误; "HTTPSQS_PUT_END"-队列已满 <br>
-   *         验证错误: "HTTPSQS_AUTH_FAILED" <br>
-   *         其他错误: 返回已"HTTPSQS_ERROR"开头的字符串
+   * @return SqsMsg 成功: SqsMsg.pos=当前队列的插入位置点, SqsMsg.msg=返回字符串"HTTPSQS_PUT_OK" <br>
+   *         错误: SqsMsg.pos=-1; SqsMsg.msg="HTTPSQS_PUT_ERROR"-入队列错误; SqsMsg.msg="HTTPSQS_PUT_END"-队列已满 <br>
+   *         验证错误: SqsMsg.pos=-1; SqsMsg.msg="HTTPSQS_AUTH_FAILED" <br>
+   *         其他错误: SqsMsg.pos=-1; SqsMsg.msg=返回已"HTTPSQS_ERROR"开头的字符串
    */
   public SqsMsg putEx(String queue_name, String data, String auth) {
     StringBuilder urlstr;
