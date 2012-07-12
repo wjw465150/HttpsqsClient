@@ -25,9 +25,9 @@ public class HttpsqsClient {
    * @param charset
    *          HTTP请求字符集
    * @param connectTimeout
-   *          连接超时
+   *          连接超时(毫秒)
    * @param readTimeout
-   *          读超时
+   *          读超时(毫秒)
    */
   public HttpsqsClient(String server, int port, String charset, int connectTimeout, int readTimeout) {
     this.server = server;
