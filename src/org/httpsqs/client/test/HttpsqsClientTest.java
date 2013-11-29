@@ -114,7 +114,7 @@ public class HttpsqsClientTest extends TestCase {
    */
   public void testView() {
     System.out.println("view");
-    long pos = -1;
+    long pos = 1;
     String expResult = "HTTPSQS_ERROR_NOFOUND";
     String result = instance.view(queue_name, pos, null);
     System.out.println(result);
